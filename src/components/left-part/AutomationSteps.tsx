@@ -427,7 +427,27 @@ export default function AutomationSteps({ mode, ChosenPostIndex, setChosenPostIn
         </Box>
       }
 
-      {steps >= 4 && " here step4"}
+      {steps >= 4 &&
+        <Box>
+          <Typography variant="subtitle1" fontWeight={600} mb={1}>
+            Other things to automate
+          </Typography>
+          <ProFeature mode={mode} text='Reply under the post so people feel seen and special' switchBtn={true} />
+          <ProFeature mode={mode} text='Follow up to re-engage and build trust' switchBtn={true} />
+          <ProFeature mode={mode} text='Automatically ask for a follow to build your audience' switchBtn={true} />
+          <ProFeature mode={mode} text='Ask for emails in DMs to keep in touch beyond social' switchBtn={true} />
+          <Button variant='outlined' size='small' sx={{
+            color: mode == 'dark' ? "#c5c5c5ff" : '#363636',
+            fontSize: '12px',
+            mt: 1,
+            fontWeight: "600",
+            border: "1px solid #898989bf",
+            textTransform: "capitalize"
+          }} >
+            Finish
+          </Button>
+        </Box>
+      }
       {/* {activeStep === steps.length && (
         <Paper sx={{ p: 3, mt: 3, bgcolor: '#e0ffe0' }}>
           <Typography variant="h6">All steps completed — you're done!</Typography>

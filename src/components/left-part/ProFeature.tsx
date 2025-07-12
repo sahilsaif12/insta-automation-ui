@@ -1,4 +1,4 @@
-import { Badge, Box, Radio, Tooltip, Typography } from "@mui/material"
+import { Badge, Box, Radio, Switch, Tooltip, Typography } from "@mui/material"
 
 interface Props {
   mode: 'dark' | 'light';
@@ -35,13 +35,15 @@ function ProFeature({ mode, text, switchBtn, radio }: Props) {
                 },
               }}
             />}
-          <Typography variant="subtitle1" >
+          {switchBtn && <Switch disabled />}
+          <Typography variant="subtitle2" >
             {text}
           </Typography>
 
         </Box>
         <Badge badgeContent={"Pro"} anchorOrigin={{ horizontal: 'left' }} sx={{
-          px: 1
+          px: 1,
+          mx: 1
         }} color="info" />
       </Box>
     </Tooltip>
