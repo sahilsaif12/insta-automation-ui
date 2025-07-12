@@ -6,10 +6,10 @@ import type { MessageType } from '../../App';
 interface props {
   comment: string;
   mode: 'dark' | 'light';
-messages:MessageType
+  messages: MessageType
 }
 
-export default function TabSwitcher({ comment, mode,messages }: props) {
+export default function TabSwitcher({ comment, mode, messages }: props) {
   const [active, setActive] = useState(0);
 
   useEffect(() => {
@@ -18,11 +18,11 @@ export default function TabSwitcher({ comment, mode,messages }: props) {
   }, [comment])
 
   useEffect(() => {
-   if (messages.openingDmActive || messages.linkMessage ||( messages.links?.length && messages.links?.length>0)) {
-    setActive(tabs.indexOf("DM"))
-   } else setActive(0)
+    if (messages.openingDmActive || messages.linkMessage || (messages.links?.length && messages.links?.length > 0)) {
+      setActive(tabs.indexOf("DM"))
+    } else setActive(0)
   }, [messages])
-  
+
 
   return (
     <Box
