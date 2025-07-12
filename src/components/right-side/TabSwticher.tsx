@@ -1,12 +1,19 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { tabs } from '../../constants/Tabs';
+interface props{
+    comment:string
+}
 
-
-export default function TabSwitcher() {
+export default function TabSwitcher({comment}:props) {
   const [active, setActive] = useState(0);
 
+  useEffect(() => {
+    if (comment) setActive(tabs.indexOf('Comments'))
+    else setActive(0)
+  }, [comment])
+  
   return (
     <Box
       sx={{

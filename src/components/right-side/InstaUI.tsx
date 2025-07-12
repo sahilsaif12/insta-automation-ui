@@ -14,8 +14,9 @@ import { postData } from '../../constants/postData';
 export interface props {
 
       ChosenPostIndex: number;
+      comment:string
 }
-const InstaUI = ({ChosenPostIndex}:props) => {
+const InstaUI = ({ChosenPostIndex,comment}:props) => {
   return (
     <Box
       sx={{

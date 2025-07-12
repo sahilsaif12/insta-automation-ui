@@ -17,7 +17,7 @@ function ProFeature({mode,text,switchBtn,radio}:Props) {
         alignItems:'center',
         my:1,
         px:1,
-        backgroundColor: mode == 'dark' ? '#363636' : "#f4f4f4ff",
+        backgroundColor: mode == 'dark' ? '#1b1a1aff' : "#f4f4f4ff",
         borderRadius:'3px'
     }}>
         <Box sx={{

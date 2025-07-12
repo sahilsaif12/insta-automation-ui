@@ -6,9 +6,10 @@ export interface props {
 
     mode: 'dark' | 'light';
       ChosenPostIndex: number;
-          setChosenPostIndex:Dispatch<SetStateAction<number>>
+          setChosenPostIndex:Dispatch<SetStateAction<number>>;
+          comment:string
 }
-function RightSide({ mode,ChosenPostIndex,setChosenPostIndex }: props) {
+function RightSide({ mode,ChosenPostIndex,setChosenPostIndex,comment }: props) {
     return (
         <Box sx={{
             backgroundColor: mode == 'dark' ? '#363636' : "#f4f4f4ff",
@@ -20,8 +21,8 @@ function RightSide({ mode,ChosenPostIndex,setChosenPostIndex }: props) {
             justifyContent:'center',
             alignItems:'center'
         }} >
-            <InstaUI ChosenPostIndex={ChosenPostIndex} />
-            <TabSwitcher/>
+            <InstaUI ChosenPostIndex={ChosenPostIndex} comment={comment} />
+            <TabSwitcher comment={comment}  />
         </Box>
     )
 }

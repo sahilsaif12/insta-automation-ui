@@ -5,9 +5,12 @@ import type { Dispatch, SetStateAction } from 'react';
 
     mode: 'dark' | 'light';
      ChosenPostIndex: number;
-      setChosenPostIndex:Dispatch<SetStateAction<number>>
+      setChosenPostIndex:Dispatch<SetStateAction<number>>;
+      comment:string;
+      setcomment:Dispatch<SetStateAction<string>>
+
 }
-function LeftSide({mode,ChosenPostIndex,setChosenPostIndex}:props) {
+function LeftSide({mode,ChosenPostIndex,setChosenPostIndex,comment,setcomment}:props) {
   return (
     <Box sx={{
       background:mode==='light'? '#FFFFFF':'#000000',
@@ -30,7 +33,7 @@ function LeftSide({mode,ChosenPostIndex,setChosenPostIndex}:props) {
       }} >
       
 
-      <AutomationSteps mode={mode} ChosenPostIndex={ChosenPostIndex} setChosenPostIndex={setChosenPostIndex}  />
+      <AutomationSteps mode={mode} ChosenPostIndex={ChosenPostIndex} setChosenPostIndex={setChosenPostIndex} comment={comment} setcomment={setcomment}  />
     </Box>
   )
 }

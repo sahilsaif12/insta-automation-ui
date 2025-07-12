@@ -1,0 +1,1 @@
+export const keywordComments=['Price', 'Link', 'Shop','Amazing','Dm']

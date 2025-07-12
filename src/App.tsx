@@ -9,6 +9,8 @@ import RightSide from './components/right-side';
 function App() {
     const [mode, setMode] = useState<'light' | 'dark'>('light');
     const [ChosenPostIndex, setChosenPostIndex] = useState<number>(0);
+      const [comment, setcomment] = useState('');
+
   const theme = useMemo(
     () =>
       createTheme({
@@ -28,8 +30,8 @@ function App() {
       
      <Sidebar mode={mode} setMode={setMode} />
      <Box sx={{display:'flex' ,background:'green',width:'100%',height:'100%' ,overflow:'hidden'}} >
-      <LeftSide mode={mode} ChosenPostIndex={ChosenPostIndex}  setChosenPostIndex={setChosenPostIndex} />
-      <RightSide  mode={mode}  ChosenPostIndex={ChosenPostIndex}  setChosenPostIndex={setChosenPostIndex} />
+      <LeftSide mode={mode} ChosenPostIndex={ChosenPostIndex}  setChosenPostIndex={setChosenPostIndex} comment={comment} setcomment={setcomment} />
+      <RightSide  mode={mode}  ChosenPostIndex={ChosenPostIndex}  setChosenPostIndex={setChosenPostIndex} comment={comment} />
      </Box>
      </Box>
     {/* </Container> */}
