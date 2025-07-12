@@ -15,7 +15,7 @@ export interface MessageType{
 
 function App() {
     const [mode, setMode] = useState<'light' | 'dark'>('light');
-    const [ChosenPostIndex, setChosenPostIndex] = useState<number>(0);
+    const [ChosenPostIndex, setChosenPostIndex] = useState<number>(1);
       const [comment, setcomment] = useState('');
       let initialMsg={
         openingDm:'Hey there! I’m so happy you’re here, thanks so much for your interest 😊 Click below and I’ll send you the link in just a sec ✨',

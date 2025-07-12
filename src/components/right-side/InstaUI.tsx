@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Avatar,
@@ -8,6 +8,8 @@ import {
   CardActions,
   Divider,
   InputBase,
+  Button,
+  Paper,
 } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import logoImg from '../../assets/botspace.png'
@@ -15,13 +17,46 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { postData } from '../../constants/postData';
 import SendIcon from '@mui/icons-material/NearMeOutlined';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import type { MessageType } from '../../App';
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
+import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import CameraEnhanceIcon from '@mui/icons-material/CameraEnhance';
+import PhoneIcon from '@mui/icons-material/Phone';
+import VideoCallIcon from '@mui/icons-material/Videocam';
+import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
+import WifiIcon from '@mui/icons-material/Wifi';
+import BatteryFullIcon from '@mui/icons-material/BatteryFull';
 
+import Message from './Message';
 export interface props {
 
   ChosenPostIndex: number;
-  comment: string
+  comment: string;
+  messages:MessageType
 }
-const InstaUI = ({ ChosenPostIndex, comment }: props) => {
+
+
+const InstaUI = ({ ChosenPostIndex, comment ,messages}: props) => {
+
+
+ const [currentTime, setCurrentTime] = useState('');
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const formatted =
+        (hours % 12 || 12) + ':' + (minutes < 10 ? '0' + minutes : minutes);
+      setCurrentTime(formatted);
+    };
+
+    updateTime(); // set once on load
+    const interval = setInterval(updateTime, 60000); // update every 1 min
+
+    return () => clearInterval(interval); // cleanup
+  }, []);
   return (
     <Box
       sx={{
@@ -33,9 +68,143 @@ const InstaUI = ({ ChosenPostIndex, comment }: props) => {
         mx: 'auto',
         bgcolor: '#000000',
         minWidth: '350px',
+        maxHeight:"650px",
         position: 'relative'
       }}
     >
+      {messages.openingDmActive || messages.linkMessage ||( messages.links?.length && messages.links?.length>0) ? 
+      // DM ui 
+     <Box
+      sx={{
+        height:'100%',
+        bgcolor: '#000',
+        display: 'flex',
+        flexDirection: 'column',
+        
+        justifyContent:'space-between',
+        p: 1
+      }}
+    >
+       <Box
+  sx={{
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    px: 1.5,
+    pt: 0.5,
+    pb: 0.5,
+    bgcolor: '#000',
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 500,
+  }}
+>
+  <Typography variant='caption'>{currentTime}</Typography>
+    <Box sx={{
+            width: '65px',
+            height: '8px',
+            background: '#1a202bff',
+            borderRadius: '12px',
+          }} ></Box>
+  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+    <SignalCellularAltIcon sx={{ fontSize: 14 }} />
+    <WifiIcon sx={{ fontSize: 14 }} />
+    <BatteryFullIcon sx={{ fontSize: 14 }} />
+  </Box>
+</Box>
+       <Box
+        sx={{
+          display: 'flex',
+          
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          px: 1.5,
+          py: 1.2,
+          borderBottom: '1px solid #1e1e1e',
+          bgcolor: '#000'
+        }}
+      >
+       
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <ArrowBackIosIcon sx={{ color: "#d2cfcfe4", fontSize: '14px' }} />
+          <Avatar
+            src={logoImg}
+            sx={{ width: 28, height: 28 }}
+          />
+          <Typography fontWeight={500} fontSize={14} color="#fff">
+            botspacehq
+          </Typography>
+        </Box>
+        <Box>
+            <PhoneIcon sx={{ color: '#fff' }}/>
+            <VideoCallIcon sx={{ color: '#fff' }}/>
+        </Box>
+      </Box>
+      {/* Chat messages */}
+      <Box sx={{ flex: 1, display: 'flex', overflowY:'auto', flexDirection: 'column', gap: 2,mt:1,maxHeight:'70%',
+      
+ '&::-webkit-scrollbar': {
+      width: '6px',
+    },
+    '&::-webkit-scrollbar-track': {
+      backgroundColor: 'transparent',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor:   '#555',
+      borderRadius: '10px',
+    },
+    scrollbarWidth: 'thin', // For Firefox
+    scrollbarColor: `${  '#555'} transparent`, // For Firefox
+
+      }}>
+
+        {messages.openingDm && <Message msg={messages.openingDm} type='receive' submsg={messages.openingDmSubText } /> }
+       {messages.openingDmSubText && <Message msg={messages.openingDmSubText} type='sent'/> }
+       {messages.linkMessage && <Message msg={messages.linkMessage} type='receive'/> }
+       {messages.links?.map((link)=>(
+ <Message msg={link} type='receive'/> 
+       )) }
+      </Box>
+
+      {/* Bottom input bar */}
+      <Paper
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap:'3px',
+          bgcolor: '#1a1a1a',
+          px: 1.5,
+          py: 1,
+          borderRadius: 8,
+          mt: 1
+        }}
+      >
+        <Box sx={{
+          display:'flex',
+          alignItems:'center'
+
+        }} >
+
+          <CameraEnhanceIcon sx={{ color: '#ffffff',background:"#2c95ffff",p:0.5,borderRadius:'50%' }}/>
+        </Box>
+        <InputBase
+          fullWidth
+          placeholder="Message..."
+          sx={{
+            ml: 1,
+            color: '#fff',
+            '&::placeholder': {
+              color: '#888'
+            }
+          }}
+        />
+          <InsertPhotoIcon sx={{ color: '#aaa' }}/>
+          <InsertEmoticonIcon sx={{ color: '#aaa' }}/>
+          <AddCircleOutlineIcon sx={{ color: '#aaa' }}/>
+      </Paper>
+    </Box>
+      :
+<>
       <Box
         sx={{
           display: 'flex',
@@ -313,6 +482,8 @@ const InstaUI = ({ ChosenPostIndex, comment }: props) => {
           }} ></Box>
         </Box>
       }
+      </>
+}
 
     </Box>
   );
