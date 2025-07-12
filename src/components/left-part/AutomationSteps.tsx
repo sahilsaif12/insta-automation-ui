@@ -1,8 +1,5 @@
 import React, { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
 import {
-  Stepper,
-  Step,
-  StepLabel,
   Button,
   Box,
   Typography,
@@ -40,10 +37,6 @@ export default function AutomationSteps({ mode, ChosenPostIndex, setChosenPostIn
   const [showMore, setshowMore] = useState(false)
   const [option, setOption] = useState('specific');
 
-  const [openingDmEnabled, setopeningDmEnabled] = useState(true);
-  const [openingDm, setOpeningDm] = useState('Hey there! I’m so happy you’re here, thanks so much for your interest 😊 Click below and I’ll send you the link in just a sec ✨');
-  const [openingDmSubText, setopeningDmSubText] = useState('send me the link');
-  const [linkMessage, setLinkMessage] = useState('Hey');
   const [links, setLinks] = useState<string[]>([]);
   const [linkInput, setLinkInput] = useState('');
 

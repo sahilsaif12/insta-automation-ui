@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Box,
   Avatar,
@@ -8,7 +8,6 @@ import {
   CardActions,
   Divider,
   InputBase,
-  Button,
   Paper,
 } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -20,7 +19,6 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import type { MessageType } from '../../App';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import CameraEnhanceIcon from '@mui/icons-material/CameraEnhance';
 import PhoneIcon from '@mui/icons-material/Phone';
 import VideoCallIcon from '@mui/icons-material/Videocam';

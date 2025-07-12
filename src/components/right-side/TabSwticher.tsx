@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { tabs } from '../../constants/Tabs';
 import type { MessageType } from '../../App';

@@ -1,5 +1,5 @@
 import { Box, Button } from '@mui/material';
-import React, { type Dispatch, type SetStateAction } from 'react'
+import { type Dispatch, type SetStateAction } from 'react'
 import InstaUI from './InstaUI';
 import TabSwitcher from './TabSwticher';
 import type { MessageType } from '../../App';
@@ -12,7 +12,7 @@ export interface props {
     messages: MessageType
 
 }
-function RightSide({ mode, ChosenPostIndex, setChosenPostIndex, comment, messages }: props) {
+function RightSide({ mode, ChosenPostIndex, comment, messages }: props) {
     return (
         <Box sx={{
             backgroundColor: mode == 'dark' ? '#363636' : "#f4f4f4ff",
