@@ -35,7 +35,7 @@ const sidebarItemList = [
     },
     {
         text: 'Automation',
-        icon: <InsightsOutlinedIcon />
+        icon: <InsightsOutlinedIcon sx={{color:"#18C064"}} />
     },
     {
         text: 'Messages',
@@ -148,7 +148,7 @@ export default function Sidebar({ mode, setMode }: props) {
                     <Tooltip title={!isExpanded ? 'Sk Saifuddin' : ''} placement="right">
                         <>
                             <Avatar
-                                sx={{ background: '#d70a7bff' }}
+                                sx={{ background: '#0288D1' }}
                                 alt="Sk Saifuddin"
                                 src="/broken-image.jpg"
                             />
