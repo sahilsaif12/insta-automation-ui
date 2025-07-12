@@ -2,19 +2,27 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { tabs } from '../../constants/Tabs';
+import type { MessageType } from '../../App';
 interface props {
   comment: string;
   mode: 'dark' | 'light';
-
+messages:MessageType
 }
 
-export default function TabSwitcher({ comment, mode }: props) {
+export default function TabSwitcher({ comment, mode,messages }: props) {
   const [active, setActive] = useState(0);
 
   useEffect(() => {
     if (comment) setActive(tabs.indexOf('Comments'))
     else setActive(0)
   }, [comment])
+
+  useEffect(() => {
+   if (messages.openingDmActive || messages.linkMessage ||( messages.links?.length && messages.links?.length>0)) {
+    setActive(tabs.indexOf("DM"))
+   } else setActive(0)
+  }, [messages])
+  
 
   return (
     <Box
@@ -36,7 +44,7 @@ export default function TabSwitcher({ comment, mode }: props) {
           width: `calc(100% / ${tabs.length} )`,
           height: 'calc(100% - 8px)',
           bgcolor: mode === 'dark' ? '#242424ff' : '#fff',
-          mx: 0.5,
+          px: 1,
           borderRadius: '999px',
           transition: 'left 0.3s',
           zIndex: 0,

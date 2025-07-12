@@ -12,34 +12,68 @@ import {
   RadioGroup,
   FormControlLabel,
   Chip,
-  TextField
+  TextField,
+  Switch
 } from '@mui/material';
 import { postData } from '../../constants/postData';
 import ProFeature from './ProFeature';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { keywordComments } from '../../constants/keywordComments';
+import type { MessageType } from '../../App';
 interface props {
 
   mode: 'dark' | 'light';
   setChosenPostIndex: Dispatch<SetStateAction<number>>;
   ChosenPostIndex: number;
-   comment:string;
-      setcomment:Dispatch<SetStateAction<string>>
+  comment: string;
+  setcomment: Dispatch<SetStateAction<string>>
+  messages: MessageType
+  setMessages: Dispatch<SetStateAction<MessageType>>
+
 }
 
 
 
 
-export default function AutomationSteps({ mode, ChosenPostIndex, setChosenPostIndex ,comment,setcomment}: props) {
+export default function AutomationSteps({ mode, ChosenPostIndex, setChosenPostIndex, comment, setcomment, messages, setMessages }: props) {
   const [steps, setsteps] = useState(1);
   const [showMore, setshowMore] = useState(false)
   const [option, setOption] = useState('specific');
+
+  const [openingDmEnabled, setopeningDmEnabled] = useState(true);
+  const [openingDm, setOpeningDm] = useState('Hey there! I’m so happy you’re here, thanks so much for your interest 😊 Click below and I’ll send you the link in just a sec ✨');
+  const [openingDmSubText, setopeningDmSubText] = useState('send me the link');
+  const [linkMessage, setLinkMessage] = useState('Hey');
+  const [links, setLinks] = useState<string[]>([]);
+  const [linkInput, setLinkInput] = useState('');
+
   const handleNext = () => {
+    if (steps === 2) {
+      setMessages((prev) => ({ ...prev, openingDmActive: true }))
+    }
     setsteps((prev) => prev + 1)
   };
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setOption(event.target.value);
   };
+
+
+  const handleAddLink = () => {
+    const trimmed = linkInput.trim();
+    if (trimmed && !links.includes(trimmed)) {
+      setLinks([...links, trimmed]);
+      setLinkInput('');
+    }
+  };
+
+  const handleRemoveLink = (index: number) => {
+    setLinks((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  useEffect(() => {
+    setMessages((prev) => ({ ...prev, links: links }))
+  }, [links])
 
   return (
     <Box sx={{
@@ -168,7 +202,7 @@ export default function AutomationSteps({ mode, ChosenPostIndex, setChosenPostIn
                       onChange={(e) => setcomment(e.target.value)}
                       sx={{
                         mt: 1,
-                        borderRadius:'4px',
+                        borderRadius: '4px',
                         background: mode === 'dark' ? '#0e0e0eff' : '#ffffffff',
                         '& .MuiOutlinedInput-root': {
                           '& fieldset': {
@@ -198,7 +232,7 @@ export default function AutomationSteps({ mode, ChosenPostIndex, setChosenPostIn
           </Paper>
           <ProFeature mode={mode} text='Any word' radio={true} />
 
-          <Button onClick={handleNext} disabled={steps > 2 || comment===''} variant='outlined' size='small' sx={{
+          <Button onClick={handleNext} disabled={steps > 2 || comment === ''} variant='outlined' size='small' sx={{
             color: mode == 'dark' ? "#c5c5c5ff" : '#363636',
             fontSize: '12px',
             mt: 1,
@@ -211,10 +245,189 @@ export default function AutomationSteps({ mode, ChosenPostIndex, setChosenPostIn
         </Box>
       }
 
-      {steps>=3 && 
-      <div className="d">step3 </div>
+      {steps >= 3 &&
+        <Box >
+          {/* Title */}
+          <Typography variant="subtitle1" fontWeight={600} mb={1}>
+            They will get
+          </Typography>
+
+          {/* Opening DM Toggle & Message */}
+          <Paper variant="outlined" sx={{ p: 1, my: 1, backgroundColor: mode == 'dark' ? '#1b1a1aff' : "#f4f4f4ff", }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Typography fontWeight={500}>an opening DM</Typography>
+              <Switch
+                checked={messages.openingDmActive}
+                sx={{
+                  '& .MuiSwitch-switchBase.Mui-checked': {
+                    color: '#00b40f',
+                  },
+                  '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+                    backgroundColor: '#00b40f',
+                  },
+                }}
+                onChange={() => setMessages((prev) => ({ ...prev, openingDmEnabled: !prev.openingDmActive }))} />
+            </Box>
+
+            {messages.openingDmActive && (
+              <Box mt={2}>
+                <TextField
+                  fullWidth
+                  multiline
+                  minRows={4}
+                  sx={{
+                    mt: 1,
+                    borderRadius: '4px',
+                    background: mode === 'dark' ? '#0e0e0eff' : '#ffffffff',
+                    '& .MuiOutlinedInput-root': {
+                      '& fieldset': {
+                        borderColor: 'transparent',
+                      },
+                      '&:hover fieldset': {
+                        borderColor: 'transparent',
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: 'transparent',
+                      },
+                    },
+                  }}
+                  value={messages.openingDm}
+                  onChange={(e) => setMessages((prev) => ({ ...prev, openingDm: e.target.value }))}
+
+                >
+
+                </TextField>
+
+                <TextField
+                  fullWidth
+                  size="small"
+                  placeholder="Send me the link"
+                  sx={{
+                    mt: 1,
+                    borderRadius: '4px',
+                    background: mode === 'dark' ? '#0e0e0eff' : '#ffffffff',
+                    '& .MuiOutlinedInput-root': {
+                      '& fieldset': {
+                        borderColor: 'transparent',
+                      },
+                      '&:hover fieldset': {
+                        borderColor: 'transparent',
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: 'transparent',
+                      },
+                    },
+                  }}
+                  value={messages.openingDmSubText}
+                  onChange={(e) => setMessages((prev) => ({ ...prev, openingDmSubText: e.target.value }))}
+                />
+
+                <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
+                  <InfoOutlinedIcon sx={{ fontSize: 18, color: '#3f51b5', mr: 0.5 }} />
+                  <Typography variant="caption" color="primary">
+                    Why does an Opening DM matter?
+                  </Typography>
+                </Box>
+              </Box>
+            )}
+          </Paper>
+
+          {/* DM with the link */}
+          <Paper sx={{ p: 1, mt: 2, backgroundColor: mode == 'dark' ? '#1b1a1aff' : "#f4f4f4ff", }}>
+            <Typography fontWeight={500} mb={1}>
+              a DM with the link
+            </Typography>
+            {/* DM message input */}
+            <TextField
+              fullWidth
+              multiline
+              minRows={2}
+              value={messages.linkMessage}
+              onChange={(e) => setMessages((prev) => ({ ...prev, linkMessage: e.target.value }))}
+              placeholder="Type your DM message here..."
+              sx={{
+                mt: 1,
+                borderRadius: '4px',
+                background: mode === 'dark' ? '#0e0e0eff' : '#ffffffff',
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: 'transparent',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: 'transparent',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'transparent',
+                  },
+                },
+              }}
+            />
+
+            {/* Link input */}
+            <TextField
+              fullWidth
+              size="small"
+              value={linkInput}
+              onChange={(e) => setLinkInput(e.target.value)}
+              placeholder="Paste a link here..."
+              sx={{
+                mt: 1,
+                borderRadius: '4px',
+                background: mode === 'dark' ? '#0e0e0eff' : '#ffffffff',
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: 'transparent',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: 'transparent',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'transparent',
+                  },
+                },
+              }}
+            />
+
+            {/* Add Link button */}
+            <Button
+              fullWidth
+              variant="outlined"
+              onClick={handleAddLink}
+              sx={{ mt: 1, textTransform: 'none' }}
+              startIcon={<Typography fontSize={20}>+</Typography>}
+            >
+              Add {linkInput ? "This" : 'A'} Link
+            </Button>
+
+            {/* Display added links */}
+            {links.length > 0 && (
+              <Box sx={{ mt: 2, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                {links.map((link, index) => (
+                  <Chip
+                    key={index}
+                    label={link}
+                    onDelete={() => handleRemoveLink(index)}
+                    color="primary"
+                    variant="outlined"
+                  />
+                ))}
+              </Box>
+            )}
+          </Paper>
+          <Button onClick={handleNext} disabled={steps > 3 || (links.length === 0 && messages.linkMessage === '')} variant='outlined' size='small' sx={{
+            color: mode == 'dark' ? "#c5c5c5ff" : '#363636',
+            fontSize: '12px',
+            mt: 1,
+            fontWeight: "600",
+            border: "1px solid #898989bf",
+            textTransform: "capitalize"
+          }} >
+            Next
+          </Button>
+        </Box>
       }
-      
+
+      {steps >= 4 && " here step4"}
       {/* {activeStep === steps.length && (
         <Paper sx={{ p: 3, mt: 3, bgcolor: '#e0ffe0' }}>
           <Typography variant="h6">All steps completed — you're done!</Typography>

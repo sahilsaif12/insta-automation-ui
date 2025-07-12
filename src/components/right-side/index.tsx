@@ -2,14 +2,17 @@ import { Box } from '@mui/material';
 import React, { type Dispatch, type SetStateAction } from 'react'
 import InstaUI from './InstaUI';
 import TabSwitcher from './TabSwticher';
+import type { MessageType } from '../../App';
 export interface props {
 
     mode: 'dark' | 'light';
       ChosenPostIndex: number;
           setChosenPostIndex:Dispatch<SetStateAction<number>>;
-          comment:string
+          comment:string,
+          messages:MessageType
+
 }
-function RightSide({ mode,ChosenPostIndex,setChosenPostIndex,comment }: props) {
+function RightSide({ mode,ChosenPostIndex,setChosenPostIndex,comment ,messages}: props) {
     return (
         <Box sx={{
             backgroundColor: mode == 'dark' ? '#363636' : "#f4f4f4ff",
@@ -21,8 +24,8 @@ function RightSide({ mode,ChosenPostIndex,setChosenPostIndex,comment }: props) {
             justifyContent:'center',
             alignItems:'center'
         }} >
-            <InstaUI ChosenPostIndex={ChosenPostIndex} comment={comment} />
-            <TabSwitcher comment={comment} mode={mode} />
+            <InstaUI ChosenPostIndex={ChosenPostIndex} comment={comment} messages={messages} />
+            <TabSwitcher comment={comment} mode={mode} messages={messages}  />
         </Box>
     )
 }
