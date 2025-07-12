@@ -2,23 +2,25 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { tabs } from '../../constants/Tabs';
-interface props{
-    comment:string
+interface props {
+  comment: string;
+  mode: 'dark' | 'light';
+
 }
 
-export default function TabSwitcher({comment}:props) {
+export default function TabSwitcher({ comment, mode }: props) {
   const [active, setActive] = useState(0);
 
   useEffect(() => {
     if (comment) setActive(tabs.indexOf('Comments'))
     else setActive(0)
   }, [comment])
-  
+
   return (
     <Box
       sx={{
         display: 'inline-flex',
-        bgcolor: '#dcdee4ff',
+        bgcolor: mode === 'dark' ? '#525252ff' : '#dcdee4ff',
         borderRadius: '999px',
         p: '4px',
         position: 'relative',
@@ -31,9 +33,10 @@ export default function TabSwitcher({comment}:props) {
           position: 'absolute',
           top: 4,
           left: `calc(${active} * 100% / ${tabs.length})`,
-          width: `calc(100% / ${tabs.length})`,
+          width: `calc(100% / ${tabs.length} )`,
           height: 'calc(100% - 8px)',
-          bgcolor: '#fff',
+          bgcolor: mode === 'dark' ? '#242424ff' : '#fff',
+          mx: 0.5,
           borderRadius: '999px',
           transition: 'left 0.3s',
           zIndex: 0,
@@ -49,7 +52,9 @@ export default function TabSwitcher({comment}:props) {
             py: 0.8,
             zIndex: 1,
             cursor: 'pointer',
-            color: active === index ? '#000' : '#555',
+            pointerEvents: 'none',
+            color: active === index ? mode === 'dark' ? "#edededff" : '#000' : mode === "dark" ? '#cececeff' : '#555',
+
             fontWeight: active === index ? 600 : 500,
             position: 'relative',
             textAlign: 'center',

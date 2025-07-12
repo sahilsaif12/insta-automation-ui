@@ -22,7 +22,7 @@ function RightSide({ mode,ChosenPostIndex,setChosenPostIndex,comment }: props) {
             alignItems:'center'
         }} >
             <InstaUI ChosenPostIndex={ChosenPostIndex} comment={comment} />
-            <TabSwitcher comment={comment}  />
+            <TabSwitcher comment={comment} mode={mode} />
         </Box>
     )
 }
