@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import React, { type Dispatch, type SetStateAction } from 'react'
 import InstaUI from './InstaUI';
 import TabSwitcher from './TabSwticher';
@@ -22,8 +22,28 @@ function RightSide({ mode, ChosenPostIndex, setChosenPostIndex, comment, message
             flexDirection: 'column',
             gap: "10px",
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
+            position:'relative'
         }} >
+            {
+                messages.openingDmActive &&( messages.linkMessage || ( !!messages.links?.length && messages.links?.length>0)) && 
+            
+             <Button  variant='outlined' size='small'
+             sx={{
+            background: mode == 'dark' ? "#c5c5c5ff" : '#44aeffff',
+            color: '#ffffffff',
+            fontSize: '12px',
+            border:'none',
+            mt: 1,
+            fontWeight: "600",
+            textTransform: "capitalize",
+            position:'absolute',
+            top:'10px',
+            right:'10px'
+          }} >
+            Go Live
+          </Button>
+}
             <InstaUI ChosenPostIndex={ChosenPostIndex} comment={comment} messages={messages} />
             <TabSwitcher comment={comment} mode={mode} messages={messages} />
         </Box>
