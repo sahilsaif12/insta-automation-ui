@@ -1,6 +1,6 @@
 
 # Insta Automation UI
-
+### Live - https://insta-automation-ui-sk-saifuddin.vercel.app/
 This project is an Instagram-inspired UI automation assignment built with React, TypeScript, Vite, and Material-UI (MUI). The main goal is to replicate a modern Instagram-like interface with interactive features, focusing on UI/UX and required functionalities, not backend integration.
 
 ## Features
